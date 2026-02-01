@@ -94,4 +94,60 @@ public class Board {
         }
         return emptyCellsList;
     }
+
+    /**
+     * 行、列、ブロックで数字の重複がない（有効な盤面である）ことをチェックする.
+     *
+     * @return 重複なし:true, 重複あり:false
+     */
+    public boolean isValid() {
+        for (int i = 0; i < 9; i++) {
+            if (!noDuplicate(getRow(i))) {
+                return false;
+            }
+
+            if (!noDuplicate(getColumn(i))) {
+                return false;
+            }
+        }
+
+        for (int row = 0; row < 9; row += 3) {
+            for (int col = 0; col < 9; col += 3) {
+                if (!noDuplicate(getBlock(row, col))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * セル単位の重複チェック.
+     */
+    public boolean isValid(Cell cell) {
+        return noDuplicate(getRow(cell.row()))
+                && noDuplicate(getColumn(cell.col()))
+                && noDuplicate(getBlock(cell.row(), cell.col()));
+    }
+
+    /**
+     * 重複がないことをチェックするヘルパーメソッド.
+     *
+     * @param cells 行、列、ブロックに含まれるセルの配列
+     */
+    private boolean noDuplicate(Cell[] cells) {
+        boolean[] seen = new boolean[10];
+        for (Cell cell : cells) {
+            if (cell.number() == 0) {
+                continue;
+            }
+
+            if (seen[cell.number()]) {
+                return false;
+            }
+
+            seen[cell.number()] = true;
+        }
+        return true;
+    }
 }
