@@ -2,6 +2,7 @@ package com.example.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * ナンプレの盤面を表すドメイン.
@@ -35,10 +36,24 @@ public class Board {
     }
 
     /**
+     * place メソッドをオーバーライドした引数が Cell の version.
+     */
+    public void place(Cell cell, int number) {
+        place(cell.row(), cell.col(), number);
+    }
+
+    /**
      * 指定したセルを空にする.
      */
     public void clear(int row, int col) {
         cells[row][col] = new Cell(row, col, 0);
+    }
+
+    /**
+     * clear メソッドをオーバーライドした引数が Cell の version.
+     */
+    public void clear(Cell cell) {
+        place(cell.row(), cell.col(), 0);
     }
 
     /**
@@ -95,6 +110,17 @@ public class Board {
         return emptyCellsList;
     }
 
+    public Optional<Cell> findEmptyCell() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (cells[row][col].number() == 0) {
+                    return Optional.of(new Cell(row, col, 0));
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
     /**
      * 行、列、ブロックで数字の重複がない（有効な盤面である）ことをチェックする.
      *
@@ -149,5 +175,29 @@ public class Board {
             seen[cell.number()] = true;
         }
         return true;
+    }
+
+    /**
+     * 初期化用メソッド.
+     * 文字列で書いた問題を Board に変換する。
+     */
+    public static Board fromString(String s) {
+        if (s.length() != 81) {
+            throw new IllegalArgumentException("length must be 81");
+        }
+
+        Board board = new Board();
+
+        for (int i = 0; i < 81; i++) {
+            char ch = s.charAt(i);
+            if (ch != '0') {
+                int value = ch - '0';
+                int row = i / 9;
+                int col = i % 9;
+                board.place(row, col, value);
+            }
+        }
+
+        return board;
     }
 }
