@@ -228,4 +228,18 @@ public class Board {
 
         return candidates;
     }
+
+    /**
+     * 盤面のコピーを取る.
+     * 一意解チェックは作問中の盤面本体でやりたくないため、このメソッドで取ったコピーで行う。
+     */
+    public Board copy() {
+        Board board = new Board();
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                board.place(row, col, this.cells[row][col].number());
+            }
+        }
+        return board;
+    }
 }
