@@ -1,8 +1,6 @@
 package com.example.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * ナンプレの盤面を表すドメイン.
@@ -198,6 +196,50 @@ public class Board {
             }
         }
 
+        return board;
+    }
+
+    /**
+     * あるマスの候補数字を取得する.
+     */
+    public Set<Integer> getCandidates(Cell cell) {
+        if (cell.number() != 0) {
+            return Set.of(); // 既に埋まっている
+        }
+
+        Set<Integer> used = new HashSet<>();
+
+        for (Cell c : getRow(cell.row())) {
+            used.add(c.number());
+        }
+        for (Cell c : getColumn(cell.col())) {
+            used.add(c.number());
+        }
+        for (Cell c : getBlock(cell.row(), cell.col())) {
+            used.add(c.number());
+        }
+
+        Set<Integer> candidates = new HashSet<>();
+        for (int n = 1; n <= 9; n++) {
+            if (!used.contains(n)) {
+                candidates.add(n);
+            }
+        }
+
+        return candidates;
+    }
+
+    /**
+     * 盤面のコピーを取る.
+     * 一意解チェックは作問中の盤面本体でやりたくないため、このメソッドで取ったコピーで行う。
+     */
+    public Board copy() {
+        Board board = new Board();
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                board.place(row, col, this.cells[row][col].number());
+            }
+        }
         return board;
     }
 }
