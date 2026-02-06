@@ -6,7 +6,7 @@ import java.util.*;
  * ナンプレの盤面を表すドメイン.
  */
 public class Board {
-    /** 盤面上のセル */
+    /** 盤面上のマス */
     private final Cell[][] cells;
 
     /** コンストラクタ */
@@ -34,7 +34,7 @@ public class Board {
     }
 
     /**
-     * place メソッドをオーバーライドした引数が Cell の version.
+     * place メソッドをオーバーロードした、引数が Cell の version.
      */
     public void place(Cell cell, int number) {
         place(cell.row(), cell.col(), number);
@@ -48,21 +48,21 @@ public class Board {
     }
 
     /**
-     * clear メソッドをオーバーライドした引数が Cell の version.
+     * clear メソッドをオーバーロードした、引数が Cell の version.
      */
     public void clear(Cell cell) {
         place(cell.row(), cell.col(), 0);
     }
 
     /**
-     * 特定の行に属するセルを取得する.
+     * 特定の行に属するマスを取得する.
      */
     public Cell[] getRow(int row) {
         return cells[row];
     }
 
     /**
-     * 特定の列に属するセルを取得する.
+     * 特定の列に属するマスを取得する.
      */
     public Cell[] getColumn(int col) {
         Cell[] column = new Cell[9];
@@ -75,7 +75,7 @@ public class Board {
     }
 
     /**
-     * 特定のブロックに属するセルを取得する.
+     * 特定のブロックに属するマスを取得する.
      * ブロックの左上のセルから右下のセルを順に格納している。
      */
     public Cell[] getBlock(int row, int col) {
@@ -94,7 +94,7 @@ public class Board {
     }
 
     /**
-     * 空のセル一覧を取得する.
+     * 空のマス一覧を取得する.
      */
     public List<Cell> getEmptyCells() {
         List<Cell> emptyCellsList = new ArrayList<>();
@@ -108,6 +108,9 @@ public class Board {
         return emptyCellsList;
     }
 
+    /**
+     * 空のマスを1つ返す.
+     */
     public Optional<Cell> findEmptyCell() {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -157,7 +160,7 @@ public class Board {
     /**
      * 重複がないことをチェックするヘルパーメソッド.
      *
-     * @param cells 行、列、ブロックに含まれるセルの配列
+     * @param cells 行、列、ブロックに含まれるマスの配列
      */
     private boolean noDuplicate(Cell[] cells) {
         boolean[] seen = new boolean[10];
