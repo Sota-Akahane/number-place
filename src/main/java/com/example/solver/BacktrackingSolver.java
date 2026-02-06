@@ -7,6 +7,7 @@ import java.util.Optional;
 
 /**
  * バックトラック法を用いて盤面を解くSolver.
+ * 完成盤面を作成する。
  */
 public class BacktrackingSolver {
     /** 盤面 */
