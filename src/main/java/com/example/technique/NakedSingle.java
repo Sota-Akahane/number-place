@@ -34,12 +34,7 @@ public class NakedSingle implements Technique {
     }
 
     @Override
-    public int difficulty() {
-        return 1;
-    }
-
-    @Override
-    public String name() {
-        return "NakedSingle";
+    public TechniqueType type() {
+        return TechniqueType.NAKED_SINGLE;
     }
 }

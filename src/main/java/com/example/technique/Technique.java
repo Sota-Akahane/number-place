@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface Technique {
     Optional<Hint> find(Board board);
-    int difficulty();
-    String name();
+    TechniqueType type();
 }

@@ -61,13 +61,8 @@ public class HiddenSingle implements Technique {
     }
 
     @Override
-    public int difficulty() {
-        return 1;
-    }
-
-    @Override
-    public String name() {
-        return "HiddenSingle";
+    public TechniqueType type() {
+        return TechniqueType.HIDDEN_SINGLE;
     }
 
     private Optional<Hint> findHiddenSingleInUnit(Board board, List<Cell> cells, int number, String unitName) {
