@@ -22,7 +22,7 @@ public class NakedSingle implements Technique {
                 int number = candidates.iterator().next();
                 return Optional.of(
                         new Hint(
-                                "NakedSingle",
+                                TechniqueType.NAKED_SINGLE,
                                 List.of(cell),
                                 new Action(cell, number),
                                 "このマスには" + number + "しか入りません。"
