@@ -8,10 +8,12 @@ import com.example.technique.Technique;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LogicalSolver {
     private final List<Technique> techniques;
     private final List<Hint> history = new ArrayList<>();
+    private int maxDifficulty = 0;
 
     public LogicalSolver(List<Technique> techniques) {
         this.techniques = techniques;
@@ -24,6 +26,9 @@ public class LogicalSolver {
                 Action action = hint.get().action();
                 board.place(action.cell(), action.number());
                 history.add(hint.get());
+
+                int difficulty = hint.get().techniqueType().getDifficulty();
+                maxDifficulty = Math.max(maxDifficulty, difficulty);
                 return hint;
             }
         }
@@ -36,5 +41,23 @@ public class LogicalSolver {
 
     public void solveLogically(Board board) {
         while (apply(board).isPresent()) {}
+    }
+
+    public DifficultyLabel difficultyLabel() {
+        if (maxDifficulty <= 1) {
+            return DifficultyLabel.EASY;
+        }
+        if (maxDifficulty == 2) {
+            return DifficultyLabel.MEDIUM;
+        }
+        return DifficultyLabel.HARD;
+    }
+
+    public SolveSummary summary() {
+        return new SolveSummary(
+                difficultyLabel(),
+                history.stream().map(Hint::techniqueType).collect(Collectors.toSet()),
+                history().size()
+        );
     }
 }
