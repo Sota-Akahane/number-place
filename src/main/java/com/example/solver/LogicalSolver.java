@@ -12,6 +12,7 @@ import java.util.Optional;
 public class LogicalSolver {
     private final List<Technique> techniques;
     private final List<Hint> history = new ArrayList<>();
+    private int maxDifficulty = 0;
 
     public LogicalSolver(List<Technique> techniques) {
         this.techniques = techniques;
@@ -24,6 +25,9 @@ public class LogicalSolver {
                 Action action = hint.get().action();
                 board.place(action.cell(), action.number());
                 history.add(hint.get());
+
+                int difficulty = hint.get().techniqueType().getDifficulty();
+                maxDifficulty = Math.max(maxDifficulty, difficulty);
                 return hint;
             }
         }
