@@ -14,6 +14,7 @@ public class LogicalSolver {
     private final List<Technique> techniques;
     private final List<Hint> history = new ArrayList<>();
     private int maxDifficulty = 0;
+    private Status status = Status.SOLVED;
 
     public LogicalSolver(List<Technique> techniques) {
         this.techniques = techniques;
@@ -40,7 +41,16 @@ public class LogicalSolver {
     }
 
     public void solveLogically(Board board) {
-        while (apply(board).isPresent()) {}
+        while (true) {
+            Optional<Hint> hint = apply(board);
+
+            if (hint.isEmpty()) {
+                if (!board.getEmptyCells().isEmpty()) {
+                    status = Status.STUCK;
+                }
+                break;
+            }
+        }
     }
 
     public DifficultyLabel difficultyLabel() {
@@ -55,6 +65,7 @@ public class LogicalSolver {
 
     public SolveSummary summary() {
         return new SolveSummary(
+                status,
                 difficultyLabel(),
                 history.stream().map(Hint::techniqueType).collect(Collectors.toSet()),
                 history().size()
