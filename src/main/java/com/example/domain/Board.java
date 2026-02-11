@@ -245,4 +245,18 @@ public class Board {
         }
         return board;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                int v = getCellNumber(r, c);
+                sb.append(v == 0 ? "." : v).append(" ");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
