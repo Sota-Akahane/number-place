@@ -15,14 +15,9 @@ import java.util.List;
 @Transactional
 public class NumberPlaceService {
     private final PuzzleGenerator puzzleGenerator;
-    private final LogicalSolver logicalSolver;
 
-    public NumberPlaceService(PuzzleGenerator puzzleGenerator, LogicalSolver logicalSolver) {
+    public NumberPlaceService(PuzzleGenerator puzzleGenerator) {
         this.puzzleGenerator = puzzleGenerator;
-        this.logicalSolver = new LogicalSolver(List.of(
-                new NakedSingle(),
-                new HiddenSingle()
-        ));
     }
 
     public Board generatePuzzle() {
