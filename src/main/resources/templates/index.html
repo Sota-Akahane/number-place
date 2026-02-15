@@ -9,7 +9,13 @@
     <table border="1">
       <tr th:each="rowCells : ${puzzle.cells}">
         <td th:each="cell : ${rowCells}">
-          <span th:text="${cell.number()}">number</span>
+          <span th:if="${cell.number != 0}" th:text="${cell.number()}"
+            >number</span
+          >
+          <input
+            th:if="${cell.number == 0}"
+            th:name="|cell_${cell.row}_${cell.col}|"
+          />
         </td>
       </tr>
     </table>
