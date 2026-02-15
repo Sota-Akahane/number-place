@@ -281,4 +281,8 @@ public class Board {
         }
         return sb.toString();
     }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
 }
