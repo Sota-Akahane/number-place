@@ -71,4 +71,14 @@ public class LogicalSolver {
                 history().size()
         );
     }
+
+    public Optional<Hint> nextHint(Board board) {
+        for (Technique technique : techniques) {
+            Optional<Hint> hint = technique.find(board);
+            if (hint.isPresent()) {
+                return hint;
+            }
+        }
+        return Optional.empty();
+    }
 }
