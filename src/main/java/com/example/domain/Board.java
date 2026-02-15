@@ -27,6 +27,13 @@ public class Board {
     }
 
     /**
+     * getCellNumber メソッドをオーバーライドした、引数が Cell の version.
+     */
+    public int getCellNumber(Cell cell) {
+        return getCellNumber(cell.row(), cell.col());
+    }
+
+    /**
      * 指定したセルに数字を入れる.
      */
     public void place(int row, int col, int number) {
@@ -120,6 +127,21 @@ public class Board {
             }
         }
         return Optional.empty();
+    }
+
+    /**
+     * 既に埋まっているマス一覧を取得する.
+     */
+    public List<Cell> getFilledCells() {
+        List<Cell> filledCellsList = new ArrayList<>();
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (cells[row][col].number() != 0) {
+                    filledCellsList.add(cells[row][col]);
+                }
+            }
+        }
+        return filledCellsList;
     }
 
     /**
