@@ -1,7 +1,6 @@
-package com.example;
+package com.example.solver;
 
 import com.example.domain.Board;
-import com.example.solver.BacktrackingSolver;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
