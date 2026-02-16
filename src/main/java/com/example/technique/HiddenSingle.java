@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * テクニック：Hidden Single.
+ */
 public class HiddenSingle implements Technique {
 
     @Override
@@ -65,6 +68,9 @@ public class HiddenSingle implements Technique {
         return TechniqueType.HIDDEN_SINGLE;
     }
 
+    /**
+     * 行、列、ブロックの各単位で Hidden Single を見つけるためのヘルパーメソッド.
+     */
     private Optional<Hint> findHiddenSingleInUnit(Board board, List<Cell> cells, int number, String unitName) {
         List<Cell> candidates = new ArrayList<>();
 

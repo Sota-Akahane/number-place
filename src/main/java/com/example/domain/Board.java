@@ -20,7 +20,7 @@ public class Board {
     }
 
     /**
-     * 指定したセルの数字を取得する.
+     * 指定したマスの数字を取得する.
      */
     public int getCellNumber(int row, int col) {
         return cells[row][col].number();
@@ -34,14 +34,14 @@ public class Board {
     }
 
     /**
-     * 指定したセルに数字を入れる.
+     * 指定したマスに数字を入れる.
      */
     public void place(int row, int col, int number) {
         cells[row][col] = new Cell(row, col, number);
     }
 
     /**
-     * place メソッドをオーバーロードした、引数が Cell の version.
+     * place メソッドをオーバーライドした、引数が Cell の version.
      */
     public void place(Cell cell, int number) {
         place(cell.row(), cell.col(), number);
@@ -55,7 +55,7 @@ public class Board {
     }
 
     /**
-     * clear メソッドをオーバーロードした、引数が Cell の version.
+     * clear メソッドをオーバーライドした、引数が Cell の version.
      */
     public void clear(Cell cell) {
         place(cell.row(), cell.col(), 0);
@@ -83,7 +83,7 @@ public class Board {
 
     /**
      * 特定のブロックに属するマスを取得する.
-     * ブロックの左上のセルから右下のセルを順に格納している。
+     * ブロックの左上のマスから右下のマスを順に格納している。
      */
     public Cell[] getBlock(int row, int col) {
         Cell[] block = new Cell[9];
@@ -171,7 +171,7 @@ public class Board {
     }
 
     /**
-     * セル単位の重複チェック.
+     * マス単位の重複チェック.
      */
     public boolean isValid(Cell cell) {
         return noDuplicate(getRow(cell.row()))
@@ -201,8 +201,7 @@ public class Board {
     }
 
     /**
-     * 初期化用メソッド.
-     * 文字列で書いた問題を Board に変換する。
+     * 文字列を Board に変換する.
      */
     public static Board fromString(String s) {
         if (s.length() != 81) {
@@ -256,7 +255,8 @@ public class Board {
 
     /**
      * 盤面のコピーを取る.
-     * 一意解チェックは作問中の盤面本体でやりたくないため、このメソッドで取ったコピーで行う。
+     * 盤面を変えたくない場合に使用する。
+     * 例えば、一意解チェックは作問中の盤面本体でやりたくないため、このメソッドで取ったコピーで行う。
      */
     public Board copy() {
         Board board = new Board();
@@ -282,6 +282,7 @@ public class Board {
         return sb.toString();
     }
 
+    /** getter */
     public Cell[][] getCells() {
         return cells;
     }

@@ -14,12 +14,18 @@ import java.util.stream.IntStream;
  */
 public class FullGridGenerator {
 
+    /**
+     * 完全解盤面を生成する.
+     */
     public Board generate() {
         Board board = new Board();
         fill(board);
         return board;
     }
 
+    /**
+     * マスを埋める.
+     */
     public boolean fill(Board board) {
         Optional<Cell> cellOpt = board.findEmptyCell().stream().findFirst();
 
@@ -43,6 +49,9 @@ public class FullGridGenerator {
         return false;
     }
 
+    /**
+     * 1~9の数字をランダム順にして返す.
+     */
     private List<Integer> shuffledNumbers() {
         List<Integer> numbers = new ArrayList<>(IntStream.rangeClosed(1, 9).boxed().toList());
         Collections.shuffle(numbers);

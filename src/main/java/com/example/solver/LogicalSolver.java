@@ -10,16 +10,28 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * 問題を人間と同様に論理で解く Solver.
+ */
 public class LogicalSolver {
+    /** 使用できるテクニック */
     private final List<Technique> techniques;
+    /** 解いた履歴 */
     private final List<Hint> history = new ArrayList<>();
+    /** 問題の難易度指標 */
     private int maxDifficulty = 0;
+    /** ステータス */
     private Status status = Status.SOLVED;
 
+    /** コンストラクタ */
     public LogicalSolver(List<Technique> techniques) {
         this.techniques = techniques;
     }
 
+    /**
+     * テクニックを順に試していき、数字が埋まったらそのテクニックをヒントとして返す.
+     *
+     */
     public Optional<Hint> apply(Board board) {
         for (Technique technique : techniques) {
             Optional<Hint> hint = technique.find(board);
@@ -40,6 +52,9 @@ public class LogicalSolver {
         return List.copyOf(history);
     }
 
+    /**
+     * 問題を最後まで論理的に解く.
+     */
     public void solveLogically(Board board) {
         while (true) {
             Optional<Hint> hint = apply(board);
@@ -53,6 +68,10 @@ public class LogicalSolver {
         }
     }
 
+    /**
+     * 難易度指標から問題の難易度を判定して返す.
+     * TODO: 難易度の判定方法を見直す。
+     */
     public DifficultyLabel difficultyLabel() {
         if (maxDifficulty <= 1) {
             return DifficultyLabel.EASY;
@@ -72,6 +91,9 @@ public class LogicalSolver {
         );
     }
 
+    /**
+     * 盤面を変えることなく、次に使用できるテクニックをヒントとして返す.
+     */
     public Optional<Hint> nextHint(Board board) {
         for (Technique technique : techniques) {
             Optional<Hint> hint = technique.find(board);

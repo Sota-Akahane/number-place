@@ -12,14 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
+/**
+ * ナンプレに関する処理を制御するコントローラ.
+ */
 @Controller
 public class NumberPlaceController {
     private final NumberPlaceService numberPlaceService;
 
+    /** コンストラクタ */
     public NumberPlaceController(NumberPlaceService numberPlaceService) {
         this.numberPlaceService = numberPlaceService;
     }
 
+    /**
+     * 初期表示.
+     * 問題を生成して表示する。
+     */
     @GetMapping("/")
     public String index(Model model) {
         Board puzzle = numberPlaceService.generatePuzzle();
@@ -27,6 +35,9 @@ public class NumberPlaceController {
         return "index";
     }
 
+    /**
+     * ヒントを表示する.
+     */
     @PostMapping("/hint")
     public String hint(String board, Model model) {
         Board puzzle = Board.fromString(board);

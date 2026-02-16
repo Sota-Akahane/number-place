@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * NakedSingle.
+ * テクニック：Naked Single.
  */
 public class NakedSingle implements Technique {
 
