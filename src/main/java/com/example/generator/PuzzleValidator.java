@@ -9,13 +9,21 @@ import com.example.technique.Technique;
 
 import java.util.List;
 
+/**
+ * 生成された問題の validation を行うクラス.
+ */
 public class PuzzleValidator {
+    /** テクニック */
     private final List<Technique> techniques;
 
+    /** コンストラクタ */
     public PuzzleValidator(List<Technique> techniques) {
         this.techniques = techniques;
     }
 
+    /**
+     * 問題の validation を行う.
+     */
     public boolean isValid(Board puzzle) {
         // 1. 論理で解けるか
         LogicalSolver logicalSolver = new LogicalSolver(techniques);

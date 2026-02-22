@@ -6,8 +6,8 @@ import com.example.domain.Cell;
 import java.util.Optional;
 
 /**
- * バックトラック法を用いて盤面を解くSolver.
- * 完成盤面を作成する。
+ * バックトラック法を用いて盤面を解く Solver.
+ * 完成盤面を作成するために使用する。
  */
 public class BacktrackingSolver {
     /** 盤面 */

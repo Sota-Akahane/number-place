@@ -1,5 +1,8 @@
 package com.example.technique;
 
+/**
+ * テクニックの情報を保持するenum.
+ */
 public enum TechniqueType {
     NAKED_SINGLE(1, "Naked Single"),
     HIDDEN_SINGLE(2, "Hidden Single");
