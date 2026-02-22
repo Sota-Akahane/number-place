@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/board.css}" />
     <title>ナンプレ</title>
   </head>
   <script th:src="@{/js/board.js}"></script>
   <body>
-    <table border="1">
+    <table class="sudoku">
       <tr th:each="rowCells : ${puzzle.cells}">
         <td th:each="cell : ${rowCells}">
           <input

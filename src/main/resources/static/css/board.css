@@ -1,0 +1,108 @@
+/* =========================
+   盤面全体
+   ========================= */
+table.sudoku {
+  border-collapse: collapse;
+  margin: 24px auto;
+  border: 2px solid #000;
+  background-color: #fff;
+}
+
+/* =========================
+   セル（td）
+   ========================= */
+table.sudoku td {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #999;
+}
+
+/* 3×3 ブロックの区切り（縦） */
+table.sudoku td:nth-child(3n) {
+  border-right: 2px solid #000;
+}
+table.sudoku td:first-child {
+  border-left: 2px solid #000;
+}
+
+/* 3×3 ブロックの区切り（横） */
+table.sudoku tr:nth-child(3n) td {
+  border-bottom: 2px solid #000;
+}
+table.sudoku tr:first-child td {
+  border-top: 2px solid #000;
+}
+
+/* =========================
+   入力セル
+   ========================= */
+input.cell {
+  width: 100%;
+  height: 100%;
+  border: none;
+  box-sizing: border-box;
+
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+
+  background-color: transparent;
+  color: #222;
+  caret-color: #007aff;
+}
+
+/* フォーカス時 */
+input.cell:focus {
+  outline: none;
+  background-color: #eaf2ff;
+}
+
+/* =========================
+   初期数字（readonly）
+   ========================= */
+input.cell[readonly] {
+  background-color: #f3f3f3;
+  color: #000;
+  cursor: default;
+}
+
+/* =========================
+   状態クラス（JSから付与）
+   ========================= */
+
+/* 入力エラー */
+input.cell.error {
+  background-color: #ffe5e5;
+  color: #c40000;
+}
+
+/* ヒント表示 */
+input.cell.hint {
+  background-color: #fff8d8;
+}
+
+/* 同行・同列・同ブロック強調 */
+input.cell.active {
+  background-color: #eef4ff;
+}
+
+/* 選択中セル */
+input.cell.selected {
+  background-color: #cfe0ff;
+}
+
+/* =========================
+   スマホ対応
+   ========================= */
+@media (max-width: 600px) {
+  table.sudoku td {
+    width: 36px;
+    height: 36px;
+  }
+
+  input.cell {
+    font-size: 16px;
+  }
+}
