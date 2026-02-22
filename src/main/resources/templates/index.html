@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/board.css}" />
+    <link rel="stylesheet" th:href="@{/css/hint.css}" />
     <title>ナンプレ</title>
   </head>
   <script th:src="@{/js/board.js}"></script>
@@ -29,9 +30,11 @@
       <p th:text="${hint.description}"></p>
     </div>
 
-    <form th:action="@{/hint}" method="post">
+    <form th:action="@{/hint}" method="post" class="hint-form">
       <input type="hidden" name="board" id="boardString" />
-      <button type="submit" onclick="buildBoardString()">ヒント</button>
+      <button type="submit" class="hint-button" onclick="buildBoardString()">
+        💡 ヒント
+      </button>
     </form>
   </body>
 </html>
