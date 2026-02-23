@@ -14,7 +14,7 @@ public class Board {
         cells = new Cell[9][9];
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                cells[row][col] = new Cell(row, col, 0);
+                cells[row][col] = new Cell(row, col, 0, false);
             }
         }
     }
@@ -23,42 +23,42 @@ public class Board {
      * 指定したマスの数字を取得する.
      */
     public int getCellNumber(int row, int col) {
-        return cells[row][col].number();
+        return cells[row][col].getNumber();
     }
 
     /**
      * getCellNumber メソッドをオーバーライドした、引数が Cell の version.
      */
     public int getCellNumber(Cell cell) {
-        return getCellNumber(cell.row(), cell.col());
+        return getCellNumber(cell.getRow(), cell.getCol());
     }
 
     /**
      * 指定したマスに数字を入れる.
      */
     public void place(int row, int col, int number) {
-        cells[row][col] = new Cell(row, col, number);
+        cells[row][col].setNumber(number);
     }
 
     /**
      * place メソッドをオーバーライドした、引数が Cell の version.
      */
     public void place(Cell cell, int number) {
-        place(cell.row(), cell.col(), number);
+        place(cell.getRow(), cell.getCol(), number);
     }
 
     /**
      * 指定したセルを空にする.
      */
     public void clear(int row, int col) {
-        cells[row][col] = new Cell(row, col, 0);
+        cells[row][col].setNumber(0);
     }
 
     /**
      * clear メソッドをオーバーライドした、引数が Cell の version.
      */
     public void clear(Cell cell) {
-        place(cell.row(), cell.col(), 0);
+        clear(cell.getRow(), cell.getCol());
     }
 
     /**
@@ -107,7 +107,7 @@ public class Board {
         List<Cell> emptyCellsList = new ArrayList<>();
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                if (cells[row][col].number() == 0) {
+                if (cells[row][col].getNumber() == 0) {
                     emptyCellsList.add(cells[row][col]);
                 }
             }
@@ -121,8 +121,9 @@ public class Board {
     public Optional<Cell> findEmptyCell() {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                if (cells[row][col].number() == 0) {
-                    return Optional.of(new Cell(row, col, 0));
+                Cell cell = cells[row][col];
+                if (cell.getNumber() == 0) {
+                    return Optional.of(cell);
                 }
             }
         }
@@ -136,7 +137,7 @@ public class Board {
         List<Cell> filledCellsList = new ArrayList<>();
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                if (cells[row][col].number() != 0) {
+                if (cells[row][col].getNumber() != 0) {
                     filledCellsList.add(cells[row][col]);
                 }
             }
@@ -174,9 +175,9 @@ public class Board {
      * マス単位の重複チェック.
      */
     public boolean isValid(Cell cell) {
-        return noDuplicate(getRow(cell.row()))
-                && noDuplicate(getColumn(cell.col()))
-                && noDuplicate(getBlock(cell.row(), cell.col()));
+        return noDuplicate(getRow(cell.getRow()))
+                && noDuplicate(getColumn(cell.getCol()))
+                && noDuplicate(getBlock(cell.getRow(), cell.getCol()));
     }
 
     /**
@@ -187,15 +188,15 @@ public class Board {
     private boolean noDuplicate(Cell[] cells) {
         boolean[] seen = new boolean[10];
         for (Cell cell : cells) {
-            if (cell.number() == 0) {
+            if (cell.getNumber() == 0) {
                 continue;
             }
 
-            if (seen[cell.number()]) {
+            if (seen[cell.getNumber()]) {
                 return false;
             }
 
-            seen[cell.number()] = true;
+            seen[cell.getNumber()] = true;
         }
         return true;
     }
@@ -227,20 +228,20 @@ public class Board {
      * あるマスの候補数字を取得する.
      */
     public Set<Integer> getCandidates(Cell cell) {
-        if (cell.number() != 0) {
+        if (cell.getNumber() != 0) {
             return Set.of(); // 既に埋まっている
         }
 
         Set<Integer> used = new HashSet<>();
 
-        for (Cell c : getRow(cell.row())) {
-            used.add(c.number());
+        for (Cell c : getRow(cell.getRow())) {
+            used.add(c.getNumber());
         }
-        for (Cell c : getColumn(cell.col())) {
-            used.add(c.number());
+        for (Cell c : getColumn(cell.getCol())) {
+            used.add(c.getNumber());
         }
-        for (Cell c : getBlock(cell.row(), cell.col())) {
-            used.add(c.number());
+        for (Cell c : getBlock(cell.getRow(), cell.getCol())) {
+            used.add(c.getNumber());
         }
 
         Set<Integer> candidates = new HashSet<>();
@@ -262,7 +263,7 @@ public class Board {
         Board board = new Board();
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
-                board.place(row, col, this.cells[row][col].number());
+                board.place(row, col, this.cells[row][col].getNumber());
             }
         }
         return board;
