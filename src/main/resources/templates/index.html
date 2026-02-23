@@ -16,7 +16,7 @@
             class="cell"
             th:name="|cell_${cell.row}_${cell.col}|"
             th:value="${cell.number == 0 ? '' : cell.number}"
-            th:readonly="${cell.number != 0}"
+            th:readonly="${cell.given}"
           />
         </td>
       </tr>

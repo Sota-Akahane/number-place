@@ -287,4 +287,14 @@ public class Board {
     public Cell[][] getCells() {
         return cells;
     }
+
+    /**
+     * はじめから埋まっているマスの given プロパティを変更する.
+     * 作問時に一度だけ使用する。
+     */
+    public void markGivenCells() {
+        for (Cell cell : getFilledCells()) {
+            cell.setGiven(true);
+        }
+    }
 }
