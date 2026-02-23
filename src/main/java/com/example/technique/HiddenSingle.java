@@ -75,7 +75,7 @@ public class HiddenSingle implements Technique {
         List<Cell> candidates = new ArrayList<>();
 
         for (Cell cell : cells) {
-            if (cell.number() == 0 && board.getCandidates(cell).contains(number)) {
+            if (cell.getNumber() == 0 && board.getCandidates(cell).contains(number)) {
                 candidates.add(cell);
             }
         }
