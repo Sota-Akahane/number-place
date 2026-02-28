@@ -78,11 +78,6 @@ input.cell.error {
   color: #c40000;
 }
 
-/* ヒント表示 */
-input.cell.hint {
-  background-color: #fff8d8;
-}
-
 /* 同行・同列・同ブロック強調 */
 input.cell.active {
   background-color: #eef4ff;
@@ -91,6 +86,11 @@ input.cell.active {
 /* 選択中セル */
 input.cell.selected {
   background-color: #cfe0ff;
+}
+
+/* ヒント表示 */
+input.cell.hint {
+  background-color: #fff8d8;
 }
 
 /* =========================
