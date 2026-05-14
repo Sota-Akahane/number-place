@@ -1,9 +1,6 @@
 package com.example.technique;
 
-import com.example.domain.Action;
-import com.example.domain.Board;
-import com.example.domain.Cell;
-import com.example.domain.Hint;
+import com.example.domain.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +13,7 @@ import java.util.Optional;
 public class HiddenSingle implements Technique {
 
     @Override
-    public Optional<Hint> find(Board board) {
+    public Optional<Hint> find(Board board, CandidateState candidateState) {
         for (int row = 0; row < 9; row++) {
             for (int number = 1; number <= 9; number++) {
                 Optional<Hint> hint = findHiddenSingleInUnit(
@@ -86,7 +83,7 @@ public class HiddenSingle implements Technique {
                     new Hint(
                             TechniqueType.HIDDEN_SINGLE,
                             List.of(target),
-                            new Action(target, number),
+                            new PlaceAction(target, number),
                             unitName + "では" + number + "はここにしか入りません。"
                     )
             );
