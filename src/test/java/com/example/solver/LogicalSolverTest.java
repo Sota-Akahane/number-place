@@ -41,8 +41,8 @@ public class LogicalSolverTest {
                     "%2d. %-15s (%d,%d) = %d%n",
                     i++,
                     h.techniqueType().name(),
-                    h.action().cell().row(),
-                    h.action().cell().col(),
+                    h.action().cell().getRow(),
+                    h.action().cell().getCol(),
                     h.action().number()
             );
         }

@@ -1,8 +1,6 @@
 package com.example.solver;
 
-import com.example.domain.Action;
-import com.example.domain.Board;
-import com.example.domain.Hint;
+import com.example.domain.*;
 import com.example.technique.Technique;
 
 import java.util.ArrayList;
@@ -29,15 +27,14 @@ public class LogicalSolver {
     }
 
     /**
-     * テクニックを順に試していき、数字が埋まったらそのテクニックをヒントとして返す.
-     *
+     * テクニックを順に試していき、使えるものが見つかったらそのテクニックをヒントとして返す.
      */
-    public Optional<Hint> apply(Board board) {
+    public Optional<Hint> apply(Board board, CandidateState candidateState) {
         for (Technique technique : techniques) {
-            Optional<Hint> hint = technique.find(board);
+            Optional<Hint> hint = technique.find(board, candidateState);
             if (hint.isPresent()) {
                 Action action = hint.get().action();
-                board.place(action.cell(), action.number());
+                applyAction(board, candidateState, action);
                 history.add(hint.get());
 
                 int difficulty = hint.get().techniqueType().getDifficulty();
@@ -57,7 +54,8 @@ public class LogicalSolver {
      */
     public void solveLogically(Board board) {
         while (true) {
-            Optional<Hint> hint = apply(board);
+            CandidateState candidateState = new CandidateState(board);
+            Optional<Hint> hint = apply(board, candidateState);
 
             if (hint.isEmpty()) {
                 if (!board.getEmptyCells().isEmpty()) {
@@ -96,11 +94,25 @@ public class LogicalSolver {
      */
     public Optional<Hint> nextHint(Board board) {
         for (Technique technique : techniques) {
-            Optional<Hint> hint = technique.find(board);
+            CandidateState candidateState = new CandidateState(board);
+            Optional<Hint> hint = technique.find(board, candidateState);
             if (hint.isPresent()) {
                 return hint;
             }
         }
         return Optional.empty();
+    }
+
+    /**
+     * 次の一手を適用する.
+     * 数字確定系のテクニックの場合は、適用後に CandidateState を再構築する。
+     */
+    private void applyAction(Board board, CandidateState candidateState, Action action) {
+        if (action instanceof PlaceAction a) {
+            board.place(a.cell(), a.number());
+            candidateState.rebuild(board);
+        } else if (action instanceof RemoveCandidateAction a) {
+            candidateState.removeCandidate(a.cell(), a.number());
+        }
     }
 }
