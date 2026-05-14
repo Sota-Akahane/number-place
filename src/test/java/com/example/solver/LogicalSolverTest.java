@@ -5,9 +5,7 @@ import com.example.domain.Hint;
 import com.example.generator.FullGridGenerator;
 import com.example.generator.PuzzleGenerator;
 import com.example.generator.PuzzleValidator;
-import com.example.technique.HiddenSingle;
-import com.example.technique.NakedSingle;
-import com.example.technique.Technique;
+import com.example.technique.TechniqueFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,14 +14,10 @@ public class LogicalSolverTest {
 
     @Test
     void solve_logically_test() {
-        List<Technique> techniques = List.of(
-                new NakedSingle(),
-                new HiddenSingle()
-        );
-        LogicalSolver logicalSolver = new LogicalSolver(techniques);
+        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
         PuzzleGenerator puzzleGenerator = new PuzzleGenerator(
                 new FullGridGenerator(),
-                new PuzzleValidator(techniques)
+                new PuzzleValidator(TechniqueFactory.createAll())
         );
 
         Board puzzle = puzzleGenerator.generate();
@@ -41,8 +35,8 @@ public class LogicalSolverTest {
                     "%2d. %-15s (%d,%d) = %d%n",
                     i++,
                     h.techniqueType().name(),
-                    h.action().cell().row(),
-                    h.action().cell().col(),
+                    h.action().cell().getRow(),
+                    h.action().cell().getCol(),
                     h.action().number()
             );
         }

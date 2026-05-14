@@ -1,25 +1,16 @@
 package com.example.generator;
 
 import com.example.domain.Board;
-import com.example.technique.HiddenSingle;
-import com.example.technique.NakedSingle;
-import com.example.technique.Technique;
+import com.example.technique.TechniqueFactory;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PuzzleGeneratorTest {
 
     @Test
     void generate_puzzle() {
-        List<Technique> techniques = List.of(
-                new NakedSingle(),
-                new HiddenSingle()
-        );
         PuzzleGenerator puzzleGenerator = new PuzzleGenerator(
                 new FullGridGenerator(),
-                new PuzzleValidator(techniques)
+                new PuzzleValidator(TechniqueFactory.createAll())
         );
 
         Board puzzle = puzzleGenerator.generate();

@@ -4,9 +4,7 @@ import com.example.domain.Board;
 import com.example.domain.Hint;
 import com.example.generator.PuzzleGenerator;
 import com.example.solver.LogicalSolver;
-import com.example.technique.HiddenSingle;
-import com.example.technique.NakedSingle;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.technique.TechniqueFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +35,7 @@ public class NumberPlaceService {
      * ヒントを取得する.
      */
     public Optional<Hint> getHint(Board board) {
-        LogicalSolver logicalSolver = new LogicalSolver(List.of(new HiddenSingle(), new NakedSingle()));
+        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
         return logicalSolver.nextHint(board);
     }
 }
