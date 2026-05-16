@@ -13,7 +13,7 @@
       <tr th:each="rowCells : ${puzzle.cells}">
         <td th:each="cell : ${rowCells}">
           <input
-            th:class="'cell' + (${hint != null and hint.relatedCells.contains(cell)} ? ' active' : '') + (${hint != null and cell == hint.action.cell} ? ' selected hint' : '')"
+            th:class="'cell' + (${hint != null and hint.isRelated(cell.row, cell.col)} ? ' active' : '') + (${hint != null and hint.isAction(cell.row, cell.col)} ? ' selected hint' : '')"
             th:name="|cell_${cell.row}_${cell.col}|"
             th:value="${cell.number == 0 ? '' : cell.number}"
             th:readonly="${cell.given}"
