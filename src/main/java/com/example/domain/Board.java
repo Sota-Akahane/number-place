@@ -101,6 +101,27 @@ public class Board {
     }
 
     /**
+     * 全 unit（行9 + 列9 + ブロック9）を返す.
+     * 順序: 行→列→ブロックの順
+     */
+    public List<Unit> getAllUnits() {
+        List<Unit> units = new ArrayList<>(27);
+
+        for (int i = 0; i < 9; i++) {
+            units.add(new Unit(UnitType.ROW, getRow(i)));
+        }
+        for (int i = 0; i < 9; i++) {
+            units.add(new Unit(UnitType.COLUMN, getColumn(i)));
+        }
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                units.add(new Unit(UnitType.BLOCK, getBlock(r, c)));
+            }
+        }
+        return units;
+    }
+
+    /**
      * 空のマス一覧を取得する.
      */
     public List<Cell> getEmptyCells() {
