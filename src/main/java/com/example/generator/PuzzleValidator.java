@@ -1,12 +1,10 @@
 package com.example.generator;
 
 import com.example.domain.Board;
-import com.example.solver.BacktrackingSolver;
 import com.example.solver.LogicalSolver;
 import com.example.solver.Status;
 import com.example.solver.UniquenessChecker;
 import com.example.technique.Technique;
-
 import java.util.List;
 
 /**
