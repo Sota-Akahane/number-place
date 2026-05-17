@@ -25,7 +25,7 @@ public class PuzzleValidator {
     public boolean isValid(Board puzzle) {
         // 1. 論理で解けるか
         LogicalSolver logicalSolver = new LogicalSolver(techniques);
-        logicalSolver.solveLogically(puzzle.copy());
+        logicalSolver.solveLogically(puzzle);
         if (logicalSolver.summary().status() == Status.STUCK) {
             return false;
         }

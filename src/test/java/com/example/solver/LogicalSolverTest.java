@@ -21,7 +21,7 @@ public class LogicalSolverTest {
         );
 
         Board puzzle = puzzleGenerator.generate();
-        logicalSolver.solveLogically(puzzle.copy());
+        logicalSolver.solveLogically(puzzle);
 
         System.out.println(puzzle);
         System.out.println("=====================");

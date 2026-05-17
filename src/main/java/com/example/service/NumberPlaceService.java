@@ -3,12 +3,11 @@ package com.example.service;
 import com.example.domain.Board;
 import com.example.domain.Hint;
 import com.example.generator.PuzzleGenerator;
-import com.example.solver.LogicalSolver;
+import com.example.solver.HintFinder;
 import com.example.technique.TechniqueFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,7 +34,7 @@ public class NumberPlaceService {
      * ヒントを取得する.
      */
     public Optional<Hint> getHint(Board board) {
-        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
-        return logicalSolver.nextHint(board);
+        HintFinder hintFinder = new HintFinder(TechniqueFactory.createAll());
+        return hintFinder.findNextHint(board);
     }
 }
