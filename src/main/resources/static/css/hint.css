@@ -43,3 +43,15 @@
 .hint-button:focus {
   outline: none;
 }
+
+/* =========================
+     エラーメッセージ
+     ========================= */
+.error-message {
+  width: 420px;
+  margin: 16px auto;
+  padding: 12px 18px;
+  border-left: 4px solid #e24a4a;
+  background: #fff5f5;
+  color: #c40000;
+}

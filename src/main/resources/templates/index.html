@@ -9,6 +9,11 @@
   </head>
   <script th:src="@{/js/board.js}"></script>
   <body>
+    <div
+      th:if="${errorMessage}"
+      class="error-message"
+      th:text="${errorMessage}"
+    ></div>
     <table class="sudoku">
       <tr th:each="rowCells : ${puzzle.cells}">
         <td th:each="cell : ${rowCells}">
