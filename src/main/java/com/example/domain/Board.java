@@ -224,16 +224,27 @@ public class Board {
 
     /**
      * 文字列を Board に変換する.
+     *
+     * @param s 81文字の文字列
+     * @throws IllegalArgumentException 入力が null / 長さ違い / 数字以外を含む場合
      */
     public static Board fromString(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException("board string must not be null");
+        }
         if (s.length() != 81) {
-            throw new IllegalArgumentException("length must be 81");
+            throw new IllegalArgumentException(
+                    "board string length must be 81, but was " + s.length());
         }
 
         Board board = new Board();
-
         for (int i = 0; i < 81; i++) {
             char ch = s.charAt(i);
+            if (ch < '0' || ch > '9') {
+                throw new IllegalArgumentException(
+                        "board string must contain only digits 0-9, but found '"
+                                + ch + "' at index " + i);
+            }
             if (ch != '0') {
                 int value = ch - '0';
                 int row = i / 9;
@@ -241,7 +252,6 @@ public class Board {
                 board.place(row, col, value);
             }
         }
-
         return board;
     }
 
