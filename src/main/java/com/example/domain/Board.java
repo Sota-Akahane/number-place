@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * ナンプレの盤面を表すドメイン.
@@ -122,48 +123,31 @@ public class Board {
     }
 
     /**
+     * 盤面の全マスを左上から右下の順に Stream で返す.
+     */
+    public Stream<Cell> streamCells() {
+        return Arrays.stream(cells).flatMap(Arrays::stream);
+    }
+
+    /**
      * 空のマス一覧を取得する.
      */
     public List<Cell> getEmptyCells() {
-        List<Cell> emptyCellsList = new ArrayList<>();
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (cells[row][col].getNumber() == 0) {
-                    emptyCellsList.add(cells[row][col]);
-                }
-            }
-        }
-        return emptyCellsList;
+        return streamCells().filter(c -> c.getNumber() == 0).toList();
     }
 
     /**
      * 空のマスを1つ返す.
      */
     public Optional<Cell> findEmptyCell() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                Cell cell = cells[row][col];
-                if (cell.getNumber() == 0) {
-                    return Optional.of(cell);
-                }
-            }
-        }
-        return Optional.empty();
+        return streamCells().filter(c -> c.getNumber() == 0).findFirst();
     }
 
     /**
      * 既に埋まっているマス一覧を取得する.
      */
     public List<Cell> getFilledCells() {
-        List<Cell> filledCellsList = new ArrayList<>();
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (cells[row][col].getNumber() != 0) {
-                    filledCellsList.add(cells[row][col]);
-                }
-            }
-        }
-        return filledCellsList;
+        return streamCells().filter(c -> c.getNumber() != 0).toList();
     }
 
     /**

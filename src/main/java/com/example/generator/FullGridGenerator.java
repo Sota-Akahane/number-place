@@ -27,7 +27,7 @@ public class FullGridGenerator {
      * マスを埋める.
      */
     public boolean fill(Board board) {
-        Optional<Cell> cellOpt = board.findEmptyCell().stream().findFirst();
+        Optional<Cell> cellOpt = board.findEmptyCell();
 
         if (cellOpt.isEmpty()) {
             return true;
