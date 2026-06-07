@@ -1,6 +1,7 @@
 package com.example.generator;
 
 import com.example.domain.Board;
+import com.example.domain.BoardValidator;
 import com.example.domain.Cell;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class FullGridGenerator {
      * マスを埋める.
      */
     public boolean fill(Board board) {
+        BoardValidator validator = new BoardValidator(board);
         Optional<Cell> cellOpt = board.findEmptyCell();
 
         if (cellOpt.isEmpty()) {
@@ -38,7 +40,7 @@ public class FullGridGenerator {
 
         for (int n : numbers) {
             board.place(cell, n);
-            if (board.isValid(cell)) {
+            if (validator.isValid(cell)) {
                 if (fill(board)) {
                     return true;
                 }

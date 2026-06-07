@@ -1,9 +1,6 @@
 package com.example.technique;
 
-import com.example.domain.Action;
-import com.example.domain.Board;
-import com.example.domain.Cell;
-import com.example.domain.Hint;
+import com.example.domain.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +13,10 @@ public class NakedSingle implements Technique {
 
     @Override
     public Optional<Hint> find(Board board) {
+        CandidateCalculator calculator = new CandidateCalculator(board);
+
         for (Cell cell : board.getEmptyCells()) {
-            Set<Integer> candidates = board.getCandidates(cell);
+            Set<Integer> candidates = calculator.getCandidates(cell);
             if (candidates.size() == 1) {
                 int number = candidates.iterator().next();
                 return Optional.of(

@@ -151,62 +151,6 @@ public class Board {
     }
 
     /**
-     * 行、列、ブロックで数字の重複がない（有効な盤面である）ことをチェックする.
-     *
-     * @return 重複なし:true, 重複あり:false
-     */
-    public boolean isValid() {
-        for (int i = 0; i < 9; i++) {
-            if (!noDuplicate(getRow(i))) {
-                return false;
-            }
-
-            if (!noDuplicate(getColumn(i))) {
-                return false;
-            }
-        }
-
-        for (int row = 0; row < 9; row += 3) {
-            for (int col = 0; col < 9; col += 3) {
-                if (!noDuplicate(getBlock(row, col))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * マス単位の重複チェック.
-     */
-    public boolean isValid(Cell cell) {
-        return noDuplicate(getRow(cell.getRow()))
-                && noDuplicate(getColumn(cell.getCol()))
-                && noDuplicate(getBlock(cell.getRow(), cell.getCol()));
-    }
-
-    /**
-     * 重複がないことをチェックするヘルパーメソッド.
-     *
-     * @param cells 行、列、ブロックに含まれるマスの配列
-     */
-    private boolean noDuplicate(Cell[] cells) {
-        boolean[] seen = new boolean[10];
-        for (Cell cell : cells) {
-            if (cell.getNumber() == 0) {
-                continue;
-            }
-
-            if (seen[cell.getNumber()]) {
-                return false;
-            }
-
-            seen[cell.getNumber()] = true;
-        }
-        return true;
-    }
-
-    /**
      * 文字列を Board に変換する.
      *
      * @param s 81文字の文字列
@@ -237,36 +181,6 @@ public class Board {
             }
         }
         return board;
-    }
-
-    /**
-     * あるマスの候補数字を取得する.
-     */
-    public Set<Integer> getCandidates(Cell cell) {
-        if (cell.getNumber() != 0) {
-            return Set.of(); // 既に埋まっている
-        }
-
-        Set<Integer> used = new HashSet<>();
-
-        for (Cell c : getRow(cell.getRow())) {
-            used.add(c.getNumber());
-        }
-        for (Cell c : getColumn(cell.getCol())) {
-            used.add(c.getNumber());
-        }
-        for (Cell c : getBlock(cell.getRow(), cell.getCol())) {
-            used.add(c.getNumber());
-        }
-
-        Set<Integer> candidates = new HashSet<>();
-        for (int n = 1; n <= 9; n++) {
-            if (!used.contains(n)) {
-                candidates.add(n);
-            }
-        }
-
-        return candidates;
     }
 
     /**
