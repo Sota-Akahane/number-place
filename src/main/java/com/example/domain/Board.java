@@ -114,8 +114,8 @@ public class Board {
         for (int i = 0; i < 9; i++) {
             units.add(new Unit(UnitType.COLUMN, getColumn(i)));
         }
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
+        for (int r = 0; r < 9; r += 3) {
+            for (int c = 0; c < 9; c += 3) {
                 units.add(new Unit(UnitType.BLOCK, getBlock(r, c)));
             }
         }
