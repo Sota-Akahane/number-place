@@ -1,45 +1,46 @@
 package com.example.solver;
 
 import com.example.domain.Board;
-import com.example.domain.Hint;
 import com.example.generator.FullGridGenerator;
 import com.example.generator.PuzzleGenerator;
 import com.example.generator.PuzzleValidator;
 import com.example.technique.TechniqueFactory;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LogicalSolverTest {
 
     @Test
-    void solve_logically_test() {
-        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
+    void solveLogicallyは生成された問題を解き切る() {
         PuzzleGenerator puzzleGenerator = new PuzzleGenerator(
                 new FullGridGenerator(),
                 new PuzzleValidator(TechniqueFactory.createAll())
         );
-
         Board puzzle = puzzleGenerator.generate();
+
+        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
         logicalSolver.solveLogically(puzzle);
 
-        System.out.println(puzzle);
-        System.out.println("=====================");
-        printHistory(logicalSolver.history());
+        // PuzzleValidator が有効と判断した盤面なので、SOLVED になるはず
+        assertEquals(Status.SOLVED, logicalSolver.summary().status());
+
+        // 履歴が記録されている
+        assertFalse(logicalSolver.history().isEmpty());
     }
 
-    public static void printHistory(List<Hint> history) {
-        int i = 1;
-        for (Hint h : history) {
-            System.out.printf(
-                    "%2d. %-15s (%d,%d) = %d%n",
-                    i++,
-                    h.techniqueType().name(),
-                    h.action().cell().getRow(),
-                    h.action().cell().getCol(),
-                    h.action().number()
-            );
-        }
-    }
+    @Test
+    void solveLogicallyは呼び出し元のBoardを変更しない() {
+        PuzzleGenerator puzzleGenerator = new PuzzleGenerator(
+                new FullGridGenerator(),
+                new PuzzleValidator(TechniqueFactory.createAll())
+        );
+        Board puzzle = puzzleGenerator.generate();
+        int originalEmpty = puzzle.getEmptyCells().size();
 
+        LogicalSolver logicalSolver = new LogicalSolver(TechniqueFactory.createAll());
+        logicalSolver.solveLogically(puzzle);
+
+        assertEquals(originalEmpty, puzzle.getEmptyCells().size(), "呼び出し元の盤面は変更されない");
+    }
 }
