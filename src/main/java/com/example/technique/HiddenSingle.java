@@ -12,12 +12,10 @@ import java.util.Optional;
 public class HiddenSingle implements Technique {
 
     @Override
-    public Optional<Hint> find(Board board) {
-        CandidateCalculator calculator = new CandidateCalculator(board);
-
+    public Optional<Hint> find(Board board, CandidateState candidateState) {
         for (Unit unit : board.getAllUnits()) {
             for (int number = 1; number <= 9; number++) {
-                Optional<Hint> hint = findInUnit(calculator, unit, number);
+                Optional<Hint> hint = findInUnit(candidateState, unit, number);
                 if (hint.isPresent()) {
                     return hint;
                 }
@@ -34,10 +32,10 @@ public class HiddenSingle implements Technique {
     /**
      * 1つの unit に対して Hidden Single を探す.
      */
-    private Optional<Hint> findInUnit(CandidateCalculator calculator, Unit unit, int number) {
+    private Optional<Hint> findInUnit(CandidateState candidateState, Unit unit, int number) {
         List<Cell> candidates = new ArrayList<>();
         for (Cell cell : unit.cells()) {
-            if (cell.getNumber() == 0 && calculator.getCandidates(cell).contains(number)) {
+            if (cell.getNumber() == 0 && candidateState.getCandidates(cell).contains(number)) {
                 candidates.add(cell);
             }
         }
@@ -51,7 +49,7 @@ public class HiddenSingle implements Technique {
                 new Hint(
                         TechniqueType.HIDDEN_SINGLE,
                         List.of(target),
-                        new Action(target, number),
+                        new PlaceAction(target, number),
                         getUnitLabel(unit.type()) + "では" + number + "はここにしか入りません。"
                 )
         );

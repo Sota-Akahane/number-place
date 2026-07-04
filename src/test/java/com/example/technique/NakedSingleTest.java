@@ -1,6 +1,7 @@
 package com.example.technique;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class NakedSingleTest {
             board.place(0, col, col);
         }
 
-        Optional<Hint> hint = new NakedSingle().find(board);
+        Optional<Hint> hint = new NakedSingle().find(board, new CandidateState(board));
 
         assertTrue(hint.isPresent());
         assertEquals(TechniqueType.NAKED_SINGLE, hint.get().techniqueType());
@@ -32,7 +33,7 @@ public class NakedSingleTest {
         // 空盤面では全マスで 1~9 が候補
         Board board = new Board();
 
-        Optional<Hint> hint = new NakedSingle().find(board);
+        Optional<Hint> hint = new NakedSingle().find(board, new CandidateState(board));
 
         assertFalse(hint.isPresent());
     }

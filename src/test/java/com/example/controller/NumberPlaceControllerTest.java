@@ -1,9 +1,6 @@
 package com.example.controller;
 
-import com.example.domain.Action;
-import com.example.domain.Board;
-import com.example.domain.Cell;
-import com.example.domain.Hint;
+import com.example.domain.*;
 import com.example.service.NumberPlaceService;
 import com.example.technique.TechniqueType;
 import org.junit.jupiter.api.Test;
@@ -66,7 +63,7 @@ public class NumberPlaceControllerTest {
         return new Hint(
                 TechniqueType.NAKED_SINGLE,
                 List.of(cell),
-                new Action(cell, 9),
+                new PlaceAction(cell, 9),
                 "stub"
         );
     }

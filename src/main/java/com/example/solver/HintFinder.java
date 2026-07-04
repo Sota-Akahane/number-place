@@ -1,6 +1,7 @@
 package com.example.solver;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import com.example.technique.Technique;
 
@@ -20,9 +21,9 @@ public class HintFinder {
     /**
      * 次のヒントを返す.
      */
-    public Optional<Hint> findNextHint(Board board) {
+    public Optional<Hint> findNextHint(Board board, CandidateState candidateState) {
         for (Technique technique : techniques) {
-            Optional<Hint> hint = technique.find(board);
+            Optional<Hint> hint = technique.find(board, candidateState);
             if (hint.isPresent()) {
                 return hint;
             }

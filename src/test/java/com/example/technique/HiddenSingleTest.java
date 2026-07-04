@@ -1,6 +1,7 @@
 package com.example.technique;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ public class HiddenSingleTest {
             board.place(8, col, 9);
         }
 
-        Optional<Hint> hint = new HiddenSingle().find(board);
+        Optional<Hint> hint = new HiddenSingle().find(board, new CandidateState(board));
 
         assertTrue(hint.isPresent());
         assertEquals(TechniqueType.HIDDEN_SINGLE, hint.get().techniqueType());
@@ -31,7 +32,7 @@ public class HiddenSingleTest {
     void Hidden_Singleが無い場合は空を返す() {
         Board board = new Board();
 
-        Optional<Hint> hint = new HiddenSingle().find(board);
+        Optional<Hint> hint = new HiddenSingle().find(board, new CandidateState(board));
 
         assertFalse(hint.isPresent());
     }

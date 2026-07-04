@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import com.example.generator.PuzzleGenerator;
 import com.example.solver.HintFinder;
@@ -35,6 +36,7 @@ public class NumberPlaceService {
      */
     public Optional<Hint> getHint(Board board) {
         HintFinder hintFinder = new HintFinder(TechniqueFactory.createAll());
-        return hintFinder.findNextHint(board);
+        CandidateState candidateState = new CandidateState(board);
+        return hintFinder.findNextHint(board, candidateState);
     }
 }

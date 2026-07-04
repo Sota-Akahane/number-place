@@ -3,6 +3,7 @@ package com.example.solver;
 import com.example.domain.Action;
 import com.example.domain.Cell;
 import com.example.domain.Hint;
+import com.example.domain.PlaceAction;
 import com.example.technique.TechniqueType;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +38,7 @@ public class DifficultyEvaluatorTest {
     /** テスト用 Hint 作成メソッド */
     private Hint generateHint(TechniqueType type) {
         Cell cell = new Cell(0, 0, 0);
-        Action action = new Action(cell, 1);
+        Action action = new PlaceAction(cell, 1);
         return new Hint(type, List.of(cell), action, "");
     }
 }

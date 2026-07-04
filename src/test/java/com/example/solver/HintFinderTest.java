@@ -1,6 +1,7 @@
 package com.example.solver;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import com.example.technique.HiddenSingle;
 import com.example.technique.NakedSingle;
@@ -19,7 +20,7 @@ public class HintFinderTest {
         Board board = new Board();
         HintFinder finder = new HintFinder(List.of());
 
-        assertFalse(finder.findNextHint(board).isPresent());
+        assertFalse(finder.findNextHint(board, new CandidateState(board)).isPresent());
     }
 
     @Test
@@ -31,7 +32,7 @@ public class HintFinderTest {
         }
 
         HintFinder finder = new HintFinder(List.of(new NakedSingle(), new HiddenSingle()));
-        Optional<Hint> hint = finder.findNextHint(board);
+        Optional<Hint> hint = finder.findNextHint(board, new CandidateState(board));
 
         assertTrue(hint.isPresent());
         assertEquals(TechniqueType.NAKED_SINGLE, hint.get().techniqueType());

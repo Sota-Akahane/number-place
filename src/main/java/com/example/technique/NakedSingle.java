@@ -12,18 +12,17 @@ import java.util.Set;
 public class NakedSingle implements Technique {
 
     @Override
-    public Optional<Hint> find(Board board) {
-        CandidateCalculator calculator = new CandidateCalculator(board);
-
+    public Optional<Hint> find(Board board, CandidateState candidateState) {
         for (Cell cell : board.getEmptyCells()) {
-            Set<Integer> candidates = calculator.getCandidates(cell);
+            Set<Integer> candidates = candidateState.getCandidates(cell);
+
             if (candidates.size() == 1) {
                 int number = candidates.iterator().next();
                 return Optional.of(
                         new Hint(
                                 TechniqueType.NAKED_SINGLE,
                                 List.of(cell),
-                                new Action(cell, number),
+                                new PlaceAction(cell, number),
                                 "このマスには" + number + "しか入りません。"
                         )
                 );
