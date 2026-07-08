@@ -61,7 +61,7 @@ public class UniquenessChecker {
 
             board.clear(cell);
 
-            if (solutionCount > 2) {
+            if (solutionCount >= 2) {
                 return;
             }
         }

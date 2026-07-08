@@ -54,7 +54,7 @@ public class LogicalSolver {
      */
     public void solveLogically(Board board) {
         Board working = board.copy();
-        CandidateState candidateState = new CandidateState(board);
+        CandidateState candidateState = new CandidateState(working);
         while (true) {
             Optional<Hint> hint = step(working, candidateState);
             if (hint.isEmpty()) {
