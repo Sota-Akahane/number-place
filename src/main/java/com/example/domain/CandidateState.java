@@ -9,14 +9,11 @@ import java.util.Set;
  * 候補数字の状態管理用のクラス.
  */
 public class CandidateState {
-    private Map<Cell, Set<Integer>> map;
+    private final Map<Cell, Set<Integer>> map = new HashMap<>();
 
     /** コンストラクタ */
     public CandidateState(Board board) {
-        this.map = new HashMap<>();
-        for (Cell cell : board.getEmptyCells()) {
-            map.put(cell, new HashSet<>(board.getCandidates(cell)));
-        }
+        rebuild(board);
     }
 
     /**
@@ -45,12 +42,14 @@ public class CandidateState {
     }
 
     /**
-     * 候補数字の状態を再構築する.
+     * 候補数字の状態を素の計算から再構築する.
+     * 数字確定時など、盤面が変わったタイミングで呼ぶ。
      */
     public void rebuild(Board board) {
         map.clear();
+        CandidateCalculator calculator = new CandidateCalculator(board);
         for (Cell cell : board.getEmptyCells()) {
-            map.put(cell, new HashSet<>(board.getCandidates(cell)));
+            map.put(cell, new HashSet<>(calculator.getCandidates(cell)));
         }
     }
 }

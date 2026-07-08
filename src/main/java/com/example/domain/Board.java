@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * ナンプレの盤面を表すドメイン.
@@ -101,118 +102,77 @@ public class Board {
     }
 
     /**
+     * 全 unit（行9 + 列9 + ブロック9）を返す.
+     * 順序: 行→列→ブロックの順
+     */
+    public List<Unit> getAllUnits() {
+        List<Unit> units = new ArrayList<>(27);
+
+        for (int i = 0; i < 9; i++) {
+            units.add(new Unit(UnitType.ROW, getRow(i)));
+        }
+        for (int i = 0; i < 9; i++) {
+            units.add(new Unit(UnitType.COLUMN, getColumn(i)));
+        }
+        for (int r = 0; r < 9; r += 3) {
+            for (int c = 0; c < 9; c += 3) {
+                units.add(new Unit(UnitType.BLOCK, getBlock(r, c)));
+            }
+        }
+        return units;
+    }
+
+    /**
+     * 盤面の全マスを左上から右下の順に Stream で返す.
+     */
+    public Stream<Cell> streamCells() {
+        return Arrays.stream(cells).flatMap(Arrays::stream);
+    }
+
+    /**
      * 空のマス一覧を取得する.
      */
     public List<Cell> getEmptyCells() {
-        List<Cell> emptyCellsList = new ArrayList<>();
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (cells[row][col].getNumber() == 0) {
-                    emptyCellsList.add(cells[row][col]);
-                }
-            }
-        }
-        return emptyCellsList;
+        return streamCells().filter(c -> c.getNumber() == 0).toList();
     }
 
     /**
      * 空のマスを1つ返す.
      */
     public Optional<Cell> findEmptyCell() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                Cell cell = cells[row][col];
-                if (cell.getNumber() == 0) {
-                    return Optional.of(cell);
-                }
-            }
-        }
-        return Optional.empty();
+        return streamCells().filter(c -> c.getNumber() == 0).findFirst();
     }
 
     /**
      * 既に埋まっているマス一覧を取得する.
      */
     public List<Cell> getFilledCells() {
-        List<Cell> filledCellsList = new ArrayList<>();
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (cells[row][col].getNumber() != 0) {
-                    filledCellsList.add(cells[row][col]);
-                }
-            }
-        }
-        return filledCellsList;
-    }
-
-    /**
-     * 行、列、ブロックで数字の重複がない（有効な盤面である）ことをチェックする.
-     *
-     * @return 重複なし:true, 重複あり:false
-     */
-    public boolean isValid() {
-        for (int i = 0; i < 9; i++) {
-            if (!noDuplicate(getRow(i))) {
-                return false;
-            }
-
-            if (!noDuplicate(getColumn(i))) {
-                return false;
-            }
-        }
-
-        for (int row = 0; row < 9; row += 3) {
-            for (int col = 0; col < 9; col += 3) {
-                if (!noDuplicate(getBlock(row, col))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * マス単位の重複チェック.
-     */
-    public boolean isValid(Cell cell) {
-        return noDuplicate(getRow(cell.getRow()))
-                && noDuplicate(getColumn(cell.getCol()))
-                && noDuplicate(getBlock(cell.getRow(), cell.getCol()));
-    }
-
-    /**
-     * 重複がないことをチェックするヘルパーメソッド.
-     *
-     * @param cells 行、列、ブロックに含まれるマスの配列
-     */
-    private boolean noDuplicate(Cell[] cells) {
-        boolean[] seen = new boolean[10];
-        for (Cell cell : cells) {
-            if (cell.getNumber() == 0) {
-                continue;
-            }
-
-            if (seen[cell.getNumber()]) {
-                return false;
-            }
-
-            seen[cell.getNumber()] = true;
-        }
-        return true;
+        return streamCells().filter(c -> c.getNumber() != 0).toList();
     }
 
     /**
      * 文字列を Board に変換する.
+     *
+     * @param s 81文字の文字列
+     * @throws IllegalArgumentException 入力が null / 長さ違い / 数字以外を含む場合
      */
     public static Board fromString(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException("board string must not be null");
+        }
         if (s.length() != 81) {
-            throw new IllegalArgumentException("length must be 81");
+            throw new IllegalArgumentException(
+                    "board string length must be 81, but was " + s.length());
         }
 
         Board board = new Board();
-
         for (int i = 0; i < 81; i++) {
             char ch = s.charAt(i);
+            if (ch < '0' || ch > '9') {
+                throw new IllegalArgumentException(
+                        "board string must contain only digits 0-9, but found '"
+                                + ch + "' at index " + i);
+            }
             if (ch != '0') {
                 int value = ch - '0';
                 int row = i / 9;
@@ -220,38 +180,7 @@ public class Board {
                 board.place(row, col, value);
             }
         }
-
         return board;
-    }
-
-    /**
-     * あるマスの候補数字を取得する.
-     */
-    public Set<Integer> getCandidates(Cell cell) {
-        if (cell.getNumber() != 0) {
-            return Set.of(); // 既に埋まっている
-        }
-
-        Set<Integer> used = new HashSet<>();
-
-        for (Cell c : getRow(cell.getRow())) {
-            used.add(c.getNumber());
-        }
-        for (Cell c : getColumn(cell.getCol())) {
-            used.add(c.getNumber());
-        }
-        for (Cell c : getBlock(cell.getRow(), cell.getCol())) {
-            used.add(c.getNumber());
-        }
-
-        Set<Integer> candidates = new HashSet<>();
-        for (int n = 1; n <= 9; n++) {
-            if (!used.contains(n)) {
-                candidates.add(n);
-            }
-        }
-
-        return candidates;
     }
 
     /**

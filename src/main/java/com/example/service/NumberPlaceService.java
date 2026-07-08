@@ -1,16 +1,14 @@
 package com.example.service;
 
 import com.example.domain.Board;
+import com.example.domain.CandidateState;
 import com.example.domain.Hint;
 import com.example.generator.PuzzleGenerator;
-import com.example.solver.LogicalSolver;
-import com.example.technique.HiddenSingle;
-import com.example.technique.NakedSingle;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.solver.HintFinder;
+import com.example.technique.TechniqueFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,7 +35,8 @@ public class NumberPlaceService {
      * ヒントを取得する.
      */
     public Optional<Hint> getHint(Board board) {
-        LogicalSolver logicalSolver = new LogicalSolver(List.of(new HiddenSingle(), new NakedSingle()));
-        return logicalSolver.nextHint(board);
+        HintFinder hintFinder = new HintFinder(TechniqueFactory.createAll());
+        CandidateState candidateState = new CandidateState(board);
+        return hintFinder.findNextHint(board, candidateState);
     }
 }

@@ -1,12 +1,10 @@
 package com.example.generator;
 
 import com.example.domain.Board;
-import com.example.solver.BacktrackingSolver;
 import com.example.solver.LogicalSolver;
 import com.example.solver.Status;
 import com.example.solver.UniquenessChecker;
 import com.example.technique.Technique;
-
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ public class PuzzleValidator {
     public boolean isValid(Board puzzle) {
         // 1. 論理で解けるか
         LogicalSolver logicalSolver = new LogicalSolver(techniques);
-        logicalSolver.solveLogically(puzzle.copy());
+        logicalSolver.solveLogically(puzzle);
         if (logicalSolver.summary().status() == Status.STUCK) {
             return false;
         }

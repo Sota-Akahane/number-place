@@ -18,4 +18,23 @@ public record Hint(
         Action action,
         String description
 ) {
+    /**
+     * 指定座標が関連マスに含まれるかどうかを判定する.
+     */
+    public boolean isRelated(int row, int col) {
+        for (Cell cell : relatedCells) {
+            if (cell.getRow() == row && cell.getCol() == col) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 指定座標が次の一手のマスかどうかを判定する.
+     */
+    public boolean isAction(int row, int col) {
+        Cell cell = action.cell();
+        return cell.getRow() == row && cell.getCol() == col;
+    }
 }

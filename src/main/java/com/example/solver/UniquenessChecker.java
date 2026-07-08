@@ -1,6 +1,7 @@
 package com.example.solver;
 
 import com.example.domain.Board;
+import com.example.domain.BoardValidator;
 import com.example.domain.Cell;
 
 import java.util.Optional;
@@ -11,18 +12,22 @@ import java.util.Optional;
 public class UniquenessChecker {
     /** 盤面 */
     private final Board board;
+    /** 盤面の validator */
+    private final BoardValidator validator;
     /** 解の個数 */
     private int solutionCount = 0;
 
     /** コンストラクタ */
     public UniquenessChecker(Board board) {
-        this.board = board;
+        // 探索中に place/clear で盤面を書き換えるため、コピーを保持する。
+        this.board = board.copy();
+        this.validator = new BoardValidator(this.board);
     }
 
     /**
      * 解が1つかどうかをチェックする.
      *
-     * @return 解が1つ:true、解が2つ:false
+     * @return 解が1個:true、0個または2個以上:false
      */
     public boolean hasUniqueSolution() {
         search();
@@ -32,8 +37,8 @@ public class UniquenessChecker {
     /**
      * 解を探す.
      */
-    public void search() {
-        if (solutionCount > 2) {
+    private void search() {
+        if (solutionCount >= 2) {
             return;
         }
 
@@ -50,13 +55,13 @@ public class UniquenessChecker {
         for (int n = 1; n <= 9; n++) {
             board.place(cell, n);
 
-            if (board.isValid(cell)) {
+            if (validator.isValid(cell)) {
                 search();
             }
 
             board.clear(cell);
 
-            if (solutionCount > 2) {
+            if (solutionCount >= 2) {
                 return;
             }
         }

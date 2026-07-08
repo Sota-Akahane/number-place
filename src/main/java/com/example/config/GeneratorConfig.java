@@ -3,8 +3,7 @@ package com.example.config;
 import com.example.generator.FullGridGenerator;
 import com.example.generator.PuzzleGenerator;
 import com.example.generator.PuzzleValidator;
-import com.example.technique.HiddenSingle;
-import com.example.technique.NakedSingle;
+import com.example.technique.TechniqueFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,7 +19,7 @@ public class GeneratorConfig {
 
     @Bean
     public PuzzleValidator puzzleValidator() {
-        return new PuzzleValidator(List.of(new NakedSingle(), new HiddenSingle()));
+        return new PuzzleValidator(TechniqueFactory.createAll());
     }
 
     @Bean

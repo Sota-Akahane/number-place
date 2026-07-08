@@ -15,6 +15,7 @@ public class NakedSingle implements Technique {
     public Optional<Hint> find(Board board, CandidateState candidateState) {
         for (Cell cell : board.getEmptyCells()) {
             Set<Integer> candidates = candidateState.getCandidates(cell);
+
             if (candidates.size() == 1) {
                 int number = candidates.iterator().next();
                 return Optional.of(

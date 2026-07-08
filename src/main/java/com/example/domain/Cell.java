@@ -50,16 +50,4 @@ public class Cell {
     public String toString() {
         return "(" + (row + 1) + "," + (col + 1) + ")";
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cell c)) return false;
-        return row == c.row && col == c.col;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(row, col);
-    }
 }
