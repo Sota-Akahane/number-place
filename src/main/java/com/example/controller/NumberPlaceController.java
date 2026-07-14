@@ -25,14 +25,14 @@ public class NumberPlaceController {
     }
 
     /**
-     * 初期表示.
-     * 問題を生成して表示する。
+     * トップ画面.
      */
     @GetMapping("/")
     public String index(Model model) {
-        Board puzzle = numberPlaceService.generatePuzzle();
-        model.addAttribute("puzzle", puzzle);
-        return "index";
+        model.addAttribute("streak", 12);
+        model.addAttribute("averageTime", "09:12");
+        model.addAttribute("solvedCount", 148);
+        return "home";
     }
 
     /**
