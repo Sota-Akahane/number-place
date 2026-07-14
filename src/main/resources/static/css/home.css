@@ -1,0 +1,89 @@
+/* =========================
+     本日の問題 CTA
+     ========================= */
+.home-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(28px, 7vw, 52px) 0;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s;
+}
+
+.home-hero-cta:hover {
+  opacity: 0.85;
+}
+
+.home-hero-cta__label {
+  font: 400 14px var(--font-serif);
+  letter-spacing: 0.2em;
+  color: var(--sub-2);
+  margin-bottom: 14px;
+}
+
+.home-hero-cta__headline {
+  font-weight: 600;
+  font-size: clamp(26px, 6vw, 40px);
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.home-hero-cta__description {
+  font: italic 400 16px/1.7 var(--font-serif);
+  color: var(--sub-3);
+  max-width: 420px;
+  margin: 0;
+}
+
+/* =========================
+     ホームのアクション領域（ボタン配置）
+     ========================= */
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+/* home-actions 内でのみ、ボタンを可変幅で伸縮させる */
+.home-actions .btn {
+  flex: 1 1 220px;
+  max-width: 300px;
+}
+
+/* =========================
+     実績 3 列
+     ========================= */
+.home-stats {
+  display: flex;
+  justify-content: space-around;
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+  align-items: center;
+}
+
+.home-stats__item {
+  text-align: center;
+}
+
+.home-stats__value {
+  font: 700 clamp(22px, 5vw, 26px) var(--font-serif);
+  color: var(--ink);
+}
+
+.home-stats__label {
+  font: italic 400 12px var(--font-serif);
+  color: var(--sub-2);
+  margin-top: 4px;
+}
+
+.home-stats__separator {
+  width: 1px;
+  background: var(--rule-thin-alt);
+  align-self: stretch;
+}

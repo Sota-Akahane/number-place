@@ -1,0 +1,45 @@
+:root {
+  /* --- 紙 --- */
+  --paper-bg: #efe7d6;
+  --paper-dot: #e3d9c2;
+  --card-bg: #f6f1e7;
+
+  /* --- インク --- */
+  --ink: #23221d;
+  --ink-player: #2f4a7a;
+  --ink-error: #9c3b2e;
+  --ink-hint: #5c6e3e;
+
+  /* --- 罫線 --- */
+  --rule-thin: #cdc4ac;
+  --rule-thin-alt: #cfc7b5;
+  --rule-thin-alt2: #d2c9b4;
+
+  /* --- セピア（補助テキスト） --- */
+  --sub-1: #74694f;
+  --sub-2: #8c8268;
+  --sub-3: #6f6657;
+
+  /* --- セル状態背景 --- */
+  --bg-error: #ecd6cd;
+  --bg-selected: #e3d4ad;
+  --bg-hint: #cfe0b3;
+  --bg-same-num: #ece0c2;
+  --bg-related: #efe7d2;
+
+  /* --- メモ・その他 --- */
+  --memo-ink: #9a8e72;
+  --remaining-label: #b3a886;
+
+  /* --- ヒントカード配色 --- */
+  --hint-success-border: #5c6e3e;
+  --hint-success-bg: #e1ecd4;
+  --hint-warn-border: #8c7a3a;
+  --hint-warn-bg: #efe6cc;
+  --hint-error-border: #9c3b2e;
+  --hint-error-bg: #f0ddd5;
+
+  /* --- フォント --- */
+  --font-serif: "Newsreader", serif;
+  --font-mono: "JetBrains Mono", monospace;
+}

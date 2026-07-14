@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head
+    th:replace="~{fragments/layout :: head('トップ - ナンプレ新聞', 'home')}"
+  ></head>
+  <body>
+    <div class="page">
+      <div class="rule-double-top"></div>
+
+      <div class="masthead-hero">
+        <div class="masthead-hero__tagline">毎日の頭の体操</div>
+        <h1 class="masthead-hero__title">ナンプレ新聞</h1>
+      </div>
+
+      <div class="rule-double-bottom"></div>
+
+      <div class="masthead-meta">
+        <span th:text="${date}">2026年 7月7日 火曜日</span>
+        <span>第 <span th:text="${issueNumber}">1,432</span> 号</span>
+      </div>
+
+      <!-- 本日の問題 CTA (領域全体がリンク) -->
+      <a th:href="@{/play(level='medium', daily=true)}" class="home-hero-cta">
+        <div class="home-hero-cta__label">本日の問題</div>
+        <div class="home-hero-cta__headline">静かな朝の、一問。</div>
+        <p class="home-hero-cta__description">
+          紙面のような罫線とセリフ書体で、新聞のパズル欄をそのまま画面に。
+        </p>
+      </a>
+
+      <!-- アクションボタン -->
+      <div class="home-actions">
+        <span class="btn btn--primary btn--disabled">つづきから 〉</span>
+        <a th:href="@{/difficulty}" class="btn btn--secondary"
+          >新しい問題を解く</a
+        >
+      </div>
+
+      <!-- 実績 -->
+      <div class="home-stats">
+        <div class="home-stats__item">
+          <div class="home-stats__value" th:text="${streak}">12</div>
+          <div class="home-stats__label">連続日数</div>
+        </div>
+        <div class="home-stats__separator"></div>
+        <div class="home-stats__item">
+          <div class="home-stats__value" th:text="${averageTime}">09:12</div>
+          <div class="home-stats__label">平均タイム</div>
+        </div>
+        <div class="home-stats__separator"></div>
+        <div class="home-stats__item">
+          <div class="home-stats__value" th:text="${solvedCount}">148</div>
+          <div class="home-stats__label">解答数</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

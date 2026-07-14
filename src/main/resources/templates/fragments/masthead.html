@@ -1,0 +1,15 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <!-- 共通マストヘッド: 小サイズ題字 + 日付・号数 -->
+    <div th:fragment="masthead(date, issueNumber)">
+      <div class="rule-double-top"></div>
+      <h1 class="masthead-title">ナンプレ新聞</h1>
+      <div class="rule-double-bottom"></div>
+      <div class="masthead-meta">
+        <span th:text="${date}">2026年 7月7日 火曜日</span>
+        <span>第 <span th:text="${issueNumber}">1,432</span> 号</span>
+      </div>
+    </div>
+  </body>
+</html>
